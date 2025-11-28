@@ -2,7 +2,7 @@ export default function handler(req, res) {
   const { state } = req.query;
 
   const GOOGLE_CLIENT_ID =
-    "211687593638-nhqqkfqj53vaiosgd5dm2f3hvhjt0sc0.apps.googleusercontent.com";
+    "211687593638-p3h4h5u2hh59svp428k2r9n49803ao4v.apps.googleusercontent.com";
 
   const REDIRECT_URI = "https://kiron-boq.vercel.app/api/auth/callback";
 
@@ -16,4 +16,5 @@ export default function handler(req, res) {
 
   res.redirect(url);
 }
+
 
