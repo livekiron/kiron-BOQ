@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "EGP Autofill (Auth)",
+  "version": "1.0",
+  "description": "Autofill tools for Bangladesh e-GP with restricted access.",
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "activeTab"
+  ],
+
+  "host_permissions": [
+    "https://www.eprocure.gov.bd/*",
+    "https://https://boq-1-click-auto-fill-5-and-n-a-and-six.vercel.app/*"
+
+
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "externally_connectable": {
+    "matches": [
+      "https://boq-1-click-auto-fill-5-and-n-a-and-c-a-for-one-pc-auth.vercel.app/*"
+    ]
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "EGP Autofill (Auth)"
+  }
+}
