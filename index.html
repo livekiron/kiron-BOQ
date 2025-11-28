@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Google Drive Picker</title>
+
+    <script type="text/javascript">
+
+      // ⛔ এখানে তোমার API KEY বসাবে
+      const API_KEY = "YOUR_API_KEY_HERE";
+
+      // ⛔ এখানে তোমার CLIENT ID বসাবে
+      const CLIENT_ID = "YOUR_CLIENT_ID_HERE";
+
+      const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
+
+      let tokenClient;
+      let accessToken = null;
+      let pickerInited = false;
+      let gisInited = false;
+
+      function gapiLoaded() {
+        gapi.load("client:picker", initializePicker);
+      }
+
+      function initializePicker() {
+        pickerInited = true;
+        maybeEnablePicker();
+      }
+
+      function gisLoaded() {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+          client_id: CLIENT_ID,
+          scope: SCOPES.join(" "),
+          callback: "",
+        });
+        gisInited = true;
+        maybeEnablePicker();
+      }
+
+      function maybeEnablePicker() {
+        if (pickerInited && gisInited) {
+          document.getElementById("pick").disabled = false;
+        }
+      }
+
+      function onPickFile() {
+        tokenClient.callback = async (response) => {
+          if (response.error !== undefined) {
+            throw response;
+          }
+          accessToken = response.access_token;
+          createPicker();
+        };
+
+        if (!accessToken) {
+          tokenClient.requestAccessToken({ prompt: "consent" });
+        } else {
+          tokenClient.requestAccessToken({ prompt: "" });
+        }
+      }
+
+      function createPicker() {
+        if (!accessToken) return;
+
+        const view = new google.picker.View(google.picker.ViewId.DOCS);
+
+        const picker = new google.picker.PickerBuilder()
+          .addView(view)
+          .setOAuthToken(accessToken)
+          .setDeveloperKey(API_KEY)
+          .setCallback(pickerCallback)
+          .build();
+
+        picker.setVisible(true);
+      }
+
+      function pickerCallback(data) {
+        if (data.action === google.picker.Action.PICKED) {
+          const fileId = data.docs[0].id;
+          alert("Selected File ID: " + fileId);
+        }
+      }
+
+    </script>
+
+    <!-- Google API Loader -->
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+
+    <!-- Google Identity Services -->
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+  </head>
+
+  <body>
+    <h2>Google Drive Picker Example</h2>
+    <button id="pick" onclick="onPickFile()" disabled>Pick File</button>
+  </body>
+</html>
