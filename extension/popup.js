@@ -1,4 +1,4 @@
-const BASE_URL = "https://boq-1-click-auto-fill-5-and-n-a-and-six.vercel.app";
+const BASE_URL = "https://kiron-boq.vercel.app";
 
 const statusEl = document.getElementById("status");
 const btnLogin = document.getElementById("btnLogin");
