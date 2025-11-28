@@ -13,7 +13,7 @@
 
   "host_permissions": [
     "https://www.eprocure.gov.bd/*",
-    "https://https://boq-1-click-auto-fill-5-and-n-a-and-six.vercel.app/*"
+    "https://https://kiron-boq.vercel.app/*"
 
 
   ],
@@ -24,7 +24,7 @@
 
   "externally_connectable": {
     "matches": [
-      "https://boq-1-click-auto-fill-5-and-n-a-and-c-a-for-one-pc-auth.vercel.app/*"
+      "https://kiron-boq.vercel.app/*"
     ]
   },
 
