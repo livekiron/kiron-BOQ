@@ -11,7 +11,7 @@ function googleLogin() {
           "https://accounts.google.com/o/oauth2/auth" +
           "?client_id=786752712312-1e705ru8ud2gnh9m4l01sie8l050317b.apps.googleusercontent.com" +
           "&response_type=token" +
-          "&redirect_uri=https://<YOUR_EXTENSION_ID>.chromiumapp.org" +
+          "&redirect_uri=https://mneicikndkcdphimdilligjhhcfldime.chromiumapp.org" +
           "&scope=email profile openid",
         interactive: true,
       },
