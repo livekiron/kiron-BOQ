@@ -4,7 +4,7 @@ export default function handler(req, res) {
   // Allowed Gmail List
   const allowed = [
     "srship205@gmail.com",
-    "srship206@gmail.com",
+    "srship206@gmail.com"
     
   ];
 
