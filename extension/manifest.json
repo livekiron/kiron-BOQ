@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "BOQ Auto Fill With Verification",
+  "version": "2.0",
+  "description": "Verification + Blocking System + BOQ Autofill",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BOQ Auth"
+  },
+  "host_permissions": [
+    "https://www.eprocure.gov.bd/*",
+    "https://kiron-boq.vercel.app/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.eprocure.gov.bd/*"
+      ],
+      "js": [
+        "gate.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "128": "icon128.png"
+  }
+}
