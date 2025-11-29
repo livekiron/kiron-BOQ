@@ -8,7 +8,7 @@ export default function handler(req, res) {
     
   ];
 
-  if (!allowed.includes(email)) {
+  if (allowed.includes(email)) {
     return res.status(403).json({
       success: false,
       message: "Email not allowed"
