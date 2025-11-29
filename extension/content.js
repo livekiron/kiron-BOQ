@@ -1,4 +1,63 @@
-(function waitForPage() {
+console.log("Content Script Loaded");
+
+// PC Unique ID
+const PC_ID = crypto.randomUUID();
+
+function googleLogin() {
+  return new Promise((resolve, reject) => {
+    chrome.identity.launchWebAuthFlow(
+      {
+        url:
+          "https://accounts.google.com/o/oauth2/auth" +
+          "?client_id=786752712312-1e705ru8ud2gnh9m4l01sie8l050317b.apps.googleusercontent.com" +
+          "&response_type=token" +
+          "&redirect_uri=https://<YOUR_EXTENSION_ID>.chromiumapp.org" +
+          "&scope=email profile openid",
+        interactive: true,
+      },
+      (redirectUrl) => {
+        if (chrome.runtime.lastError) {
+          reject(chrome.runtime.lastError);
+        } else {
+          const token = redirectUrl.match(/access_token=([^&]*)/)[1];
+          resolve(token);
+        }
+      }
+    );
+  });
+}
+
+async function verifyUser() {
+  try {
+    const token = await googleLogin();
+
+    const response = await fetch("https://kiron-boq.vercel.app/api/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token, pcId: PC_ID }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      console.log("Verified:", result.email);
+
+      // এখন Extension পুরো কাজ করবে
+      startExtensionFeatures();
+
+    } else {
+      alert(result.error);
+    }
+  } catch (err) {
+    alert("Login failed");
+  }
+}
+
+function startExtensionFeatures() {
+  console.log("Extension Started Successfully!");
+  /// আপনার main কাজ এখানে লিখবেন
+  
+  (function waitForPage() {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", waitForPage);
     return;
@@ -264,3 +323,11 @@
 
   })();
 })();
+
+  
+  
+  
+}
+
+// প্রথমেই Verify শুরু
+verifyUser();
